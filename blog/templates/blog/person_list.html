@@ -1,0 +1,22 @@
+<!-- templates/your_app/person_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person List</title>
+</head>
+<body>
+    <h1>Person List</h1>
+    <ul>
+        {% for person in persons %}
+            <li>
+                Wellbeing Status: {{ person.wellbeing }} <br>
+                Created on: {{ person.created_date }} <br>
+                Published on: {{ person.published_date }}
+            </li>
+        {% empty %}
+            <li>No persons found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
