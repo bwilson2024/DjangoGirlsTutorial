@@ -1,0 +1,23 @@
+<!-- templates/your_app/journaling_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Journaling Entries</title>
+</head>
+<body>
+    <h1>Journal Entries</h1>
+    <ul>
+        {% for journaling in journalings %}
+            <li>
+                Entry Number: {{ journaling.entry_number }} <br>
+                Date: {{ journaling.date }} <br>
+                Created on: {{ journaling.created_date }} <br>
+                Published on: {{ journaling.published_date }}
+            </li>
+        {% empty %}
+            <li>No journal entries found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
