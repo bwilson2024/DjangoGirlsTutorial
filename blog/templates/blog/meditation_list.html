@@ -1,0 +1,23 @@
+<!-- templates/your_app/meditation_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meditation List</title>
+</head>
+<body>
+    <h1>Meditation Sessions</h1>
+    <ul>
+        {% for meditation in meditations %}
+            <li>
+                Length: {{ meditation.length }} minutes <br>
+                Impact: {{ meditation.impact }} <br>
+                Created on: {{ meditation.created_date }} <br>
+                Published on: {{ meditation.published_date }}
+            </li>
+        {% empty %}
+            <li>No meditation sessions found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
