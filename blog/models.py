@@ -30,17 +30,21 @@ class Person(models.Model):
         ('good', 'Good'),
     ]
     wellbeing = models.CharField(max_length=7, choices=WELLBEING_CHOICES, default='average')
-    # Other attributes like name, email, etc., could also be included here.
+    created_date = models.DateTimeField(auto_now_add=True)
+    published_date = models.DateTimeField(null=True, blank=True)
 
 class Meditation(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='meditations')
     length = models.PositiveIntegerField(help_text="Duration in minutes")
     impact = models.CharField(max_length=255, blank=True, help_text="Descriptive impact on wellbeing")
+    created_date = models.DateTimeField(auto_now_add=True)
+    published_date = models.DateTimeField(null=True, blank=True)
 
 class Journaling(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='journal_entries')
     entry_number = models.PositiveIntegerField()
     date = models.DateField(default=now)
+    created_date = models.DateTimeField(auto_now_add=True)
+    published_date = models.DateTimeField(null=True, blank=True)
 
-# Since WellbeingReport is not a database model but more of a service or utility for generating reports,
-# we don't define it as a Django model. Instead, report generation would be handled through views or a separate service layer.
+# Note: The WellbeingReport class is conceptual and used for generating reports rather than storing data, so it doesn't require these fields.
