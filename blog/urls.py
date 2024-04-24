@@ -14,6 +14,8 @@ urlpatterns = [
     path('accounts/password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('', auth_views.LoginView.as_view(template_name='registration/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),    
-    path('add_meditation/', views.add_meditation, name='add_meditation')
+    path('add_meditation/', views.add_meditation, name='add_meditation'),
+    path('signup/', views.signup, name='signup')
+
 
     ]
