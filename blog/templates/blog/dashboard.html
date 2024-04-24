@@ -1,0 +1,42 @@
+<!-- blog/templates/blog/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Wellbeing for Youth</title>
+</head>
+<body>
+    <header>
+        <h1>{{ greeting }}</h1>
+    </header>
+    <main>
+        {% if person %}
+            <section>
+                <h2>Your Recent Meditations</h2>
+                <ul>
+                    {% for meditation in meditations %}
+                        <li>{{ meditation.created_date }} - Duration: {{ meditation.length }} minutes</li>
+                    {% empty %}
+                        <li>No recent meditations found.</li>
+                    {% endfor %}
+                </ul>
+            </section>
+            <section>
+                <h2>Your Journal Entries</h2>
+                <ul>
+                    {% for entry in journal_entries %}
+                        <li>{{ entry.date }} - Entry {{ entry.entry_number }}</li>
+                    {% empty %}
+                        <li>No recent journal entries found.</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% else %}
+            <p>Sign up or log in to track your wellbeing, meditate, and journal!</p>
+        {% endif %}
+    </main>
+    <footer>
+        <p>Thank you for visiting Wellbeing for Youth.</p>
+    </footer>
+</body>
+</html>
