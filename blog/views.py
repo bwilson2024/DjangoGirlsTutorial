@@ -85,7 +85,8 @@ def dashboard(request):
         'meditations': meditations,
         'journal_entries': journal_entries,
         #'greeting': f"Welcome back, {request.user.first_name}!"
-        'greeting': f"Welcome back, {request.user.get_full_name()}!"
+        #'greeting': f"Welcome back, {request.user.get_full_name()}!"
+        'greeting': f"Welcome back, {request.user.get_username()}!"
 
     }
     return render(request, 'blog/dashboard.html', context)
