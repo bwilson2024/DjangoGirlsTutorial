@@ -132,3 +132,25 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
+
+#####################################################################
+#add a wellbeing report view
+#####################################################################
+
+from django.db.models import Count
+from django.db.models.functions import TruncDate
+
+@login_required
+def wellbeing_report(request):
+    meditations = Meditation.objects.filter(person=request.user.person).annotate(entry_date=TruncDate('created_date')).values('entry_date').annotate(count=Count('id')).order_by('entry_date')
+    journals = Journaling.objects.filter(person=request.user.person).annotate(entry_date=TruncDate('date')).values('entry_date').annotate(count=Count('id')).order_by('entry_date')
+
+    dates = sorted(set(meditations.values_list('entry_date', flat=True)) | set(journals.values_list('entry_date', flat=True)))
+
+    data = []
+    for date in dates:
+        meditation_count = next((m['count'] for m in meditations if m['entry_date'] == date), 0)
+        journal_count = next((j['count'] for j in journals if j['entry_date'] == date), 0)
+        data.append({'date': date, 'meditation_count': meditation_count, 'journal_count': journal_count})
+
+    return render(request, 'blog/wellbeing_report.html', {'data': data})
