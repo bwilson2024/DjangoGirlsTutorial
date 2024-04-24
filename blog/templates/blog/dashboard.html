@@ -13,7 +13,35 @@
                 <p>Wellbeing: {{ person.get_wellbeing_display }}</p>
                 <!-- Add more fields from the Person model here -->
             </section>
-            <!-- Other sections for meditations, journal entries, etc. -->
+
+            <section>
+                <h2>Recent Meditations</h2>
+                <ul>
+                    {% for meditation in meditations %}
+                        <li>
+                            <p>Date: {{ meditation.created_date }}</p>
+                            <p>Length: {{ meditation.length }} minutes</p>
+                            <p>Impact: {{ meditation.impact }}</p>
+                        </li>
+                    {% empty %}
+                        <li>No recent meditations found.</li>
+                    {% endfor %}
+                </ul>
+            </section>
+
+            <section>
+                <h2>Recent Journal Entries</h2>
+                <ul>
+                    {% for entry in journal_entries %}
+                        <li>
+                            <p>Date: {{ entry.date }}</p>
+                            <p>Entry Number: {{ entry.entry_number }}</p>
+                        </li>
+                    {% empty %}
+                        <li>No recent journal entries found.</li>
+                    {% endfor %}
+                </ul>
+            </section>
         {% else %}
             <p>You don't have a profile yet. Please create one.</p>
         {% endif %}
