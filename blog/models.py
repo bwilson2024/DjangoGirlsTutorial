@@ -3,10 +3,11 @@ from django.db import models
 from django.utils import timezone
 from datetime import datetime
 from django.utils.timezone import now
+from django.contrib.auth.models import User
 
 
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
@@ -29,12 +30,15 @@ class Person(models.Model):
         ('average', 'Average'),
         ('good', 'Good'),
     ]
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+#    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=100, blank=False, help_text="Enter the full name of the person", default="No Name Yet")
     wellbeing = models.CharField(max_length=7, choices=WELLBEING_CHOICES, default='average')
     created_date = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField(null=True, blank=True)
 
 class Meditation(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='meditations')
     length = models.PositiveIntegerField(help_text="Duration in minutes")
     impact = models.CharField(max_length=255, blank=True, help_text="Descriptive impact on wellbeing")
@@ -42,6 +46,7 @@ class Meditation(models.Model):
     published_date = models.DateTimeField(null=True, blank=True)
 
 class Journaling(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='journal_entries')
     entry_number = models.PositiveIntegerField()
     date = models.DateField(default=now)
@@ -49,3 +54,8 @@ class Journaling(models.Model):
     published_date = models.DateTimeField(null=True, blank=True)
 
 # Note: The WellbeingReport class is conceptual and used for generating reports rather than storing data, so it doesn't require these fields.
+
+##############################################################
+#Add in users and user management to this app
+##############################################################
+
