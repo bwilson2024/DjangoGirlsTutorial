@@ -90,3 +90,25 @@ def dashboard(request):
 
     }
     return render(request, 'blog/dashboard.html', context)
+
+
+###############################################################
+# add in add meditation view
+################################################################
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import MeditationForm
+
+@login_required
+def add_meditation(request):
+    if request.method == 'POST':
+        form = MeditationForm(request.POST)
+        if form.is_valid():
+            meditation = form.save(commit=False)
+            meditation.person = request.user.person
+            meditation.save()
+            return redirect('dashboard')
+    else:
+        form = MeditationForm()
+    return render(request, 'blog/add_meditation.html', {'form': form})

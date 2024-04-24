@@ -42,6 +42,13 @@
                     {% endfor %}
                 </ul>
             </section>
+
+            <section>
+                <h2>Recent Meditations</h2>
+                <a href="{% url 'add_meditation' %}">Add Meditation</a>
+                <!-- ... -->
+            </section>
+
         {% else %}
             <p>You don't have a profile yet. Please create one.</p>
         {% endif %}
