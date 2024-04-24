@@ -10,6 +10,7 @@
     <ul>
         {% for person in persons %}
             <li>
+                Name: {{ person.name }} <br>
                 Wellbeing Status: {{ person.wellbeing }} <br>
                 Created on: {{ person.created_date }} <br>
                 Published on: {{ person.published_date }}

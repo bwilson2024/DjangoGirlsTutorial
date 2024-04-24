@@ -16,16 +16,16 @@ def person_list(request):
     # Fetch and filter Person instances by published date
     persons = Person.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     # Pass the data to the template context
-    return render(request, 'your_app/person_list.html', {'persons': persons})
+    return render(request, 'blog/person_list.html', {'persons': persons})
 
 def meditation_list(request):
     # Fetch and filter Meditation instances by published date
     meditations = Meditation.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     # Pass the data to the template context
-    return render(request, 'your_app/meditation_list.html', {'meditations': meditations})
+    return render(request, 'blog/meditation_list.html', {'meditations': meditations})
 
 def journaling_list(request):
     # Fetch and filter Journaling instances by published date
     journalings = Journaling.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     # Pass the data to the template context
-    return render(request, 'your_app/journaling_list.html', {'journalings': journalings})
+    return render(request, 'blog/journaling_list.html', {'journalings': journalings})

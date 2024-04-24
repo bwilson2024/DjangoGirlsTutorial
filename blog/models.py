@@ -29,6 +29,7 @@ class Person(models.Model):
         ('average', 'Average'),
         ('good', 'Good'),
     ]
+    name = models.CharField(max_length=100, blank=False, help_text="Enter the full name of the person", default="No Name Yet")
     wellbeing = models.CharField(max_length=7, choices=WELLBEING_CHOICES, default='average')
     created_date = models.DateTimeField(auto_now_add=True)
     published_date = models.DateTimeField(null=True, blank=True)
