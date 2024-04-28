@@ -47,6 +47,7 @@ class Meditation(models.Model):
 
 class Journaling(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+#    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='journal_entries')
     person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name='journal_entries')
     entry_number = models.PositiveIntegerField()
     date = models.DateField(default=now)
