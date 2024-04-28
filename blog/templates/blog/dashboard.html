@@ -27,6 +27,7 @@
                         <li>No recent meditations found.</li>
                     {% endfor %}
                 </ul>
+                <a href="{% url 'add_meditation' %}">Add Meditation</a>
             </section>
 
             <section>
@@ -40,23 +41,14 @@
                     {% empty %}
                         <li>No recent journal entries found.</li>
                     {% endfor %}
-                    <a href="{% url 'add_journaling' %}">Add Journal Entry</a>
-
-
                 </ul>
+                <a href="{% url 'add_journaling' %}">Add Journal Entry</a>
             </section>
 
             <section>
-                <h2>Recent Meditations</h2>
-                <a href="{% url 'add_meditation' %}">Add Meditation</a>
-                <!-- ... -->
-            </section>
-
-            <section>
-                <h1>Wellbeing Report</h1>
+                <h2>Wellbeing Report</h2>
                 <a href="{% url 'wellbeing_report' %}">View Wellbeing Report</a>
             </section>
-
         {% else %}
             <p>You don't have a profile yet. Please create one.</p>
         {% endif %}
