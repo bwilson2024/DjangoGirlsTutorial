@@ -9,4 +9,7 @@ class MeditationForm(forms.ModelForm):
 class JournalingForm(forms.ModelForm):
     class Meta:
         model = Journaling
-        fields = ['entry_number', 'date']
+#        fields = ['entry_number', 'date']
+        fields = ['entry_number', 'date', 'entry_text']  # Add 'entry_text' to the form fields
+
+        
