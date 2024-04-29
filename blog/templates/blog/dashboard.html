@@ -37,6 +37,7 @@
                         <li>
                             <p>Date: {{ entry.date }}</p>
                             <p>Entry Number: {{ entry.entry_number }}</p>
+                            <p>{{ entry.entry_text }}</p>  <!-- Display the truncated text -->
                         </li>
                     {% empty %}
                         <li>No recent journal entries found.</li>

@@ -78,7 +78,15 @@ def dashboard(request):
 #        two_days_ago = timezone.now() - datetime.timedelta(days=2)
 #        meditations = Meditation.objects.filter(person=person, created_date__gte=two_days_ago).order_by('-created_date')[:5]
         meditations = Meditation.objects.filter(person=person).order_by('-created_date')[:1]
-        journal_entries = Journaling.objects.filter(person=person).order_by('-date')[:1]
+        journal_entries = Journaling.objects.filter(person=person).order_by('-date')[:3]
+
+        # Truncate the journal entry text to display only the first few sentences
+        # for entry in journal_entries:
+        #     print(f"entry is {entry}")
+        #     sentences = entry.entry_text.split(' ')
+        #     entry.truncated_text = '.'.join(sentences[:15]) + '.' if len(sentences) > 3 else entry.entry_text
+        # print(f"Sentences are {sentences}")
+
     except Person.DoesNotExist:
         person = None
         meditations = []
