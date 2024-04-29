@@ -74,8 +74,11 @@ from .models import Person, Meditation, Journaling
 def dashboard(request):
     try:
         person = request.user.person
-        meditations = Meditation.objects.filter(person=person).order_by('-created_date')[:5]
-        journal_entries = Journaling.objects.filter(person=person).order_by('-date')[:5]
+
+#        two_days_ago = timezone.now() - datetime.timedelta(days=2)
+#        meditations = Meditation.objects.filter(person=person, created_date__gte=two_days_ago).order_by('-created_date')[:5]
+        meditations = Meditation.objects.filter(person=person).order_by('-created_date')[:1]
+        journal_entries = Journaling.objects.filter(person=person).order_by('-date')[:1]
     except Person.DoesNotExist:
         person = None
         meditations = []
