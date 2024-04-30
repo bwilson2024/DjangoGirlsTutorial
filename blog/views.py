@@ -74,8 +74,19 @@ from .models import Person, Meditation, Journaling
 def dashboard(request):
     try:
         person = request.user.person
-        meditations = Meditation.objects.filter(person=person).order_by('-created_date')[:5]
-        journal_entries = Journaling.objects.filter(person=person).order_by('-date')[:5]
+
+#        two_days_ago = timezone.now() - datetime.timedelta(days=2)
+#        meditations = Meditation.objects.filter(person=person, created_date__gte=two_days_ago).order_by('-created_date')[:5]
+        meditations = Meditation.objects.filter(person=person).order_by('-created_date')[:1]
+        journal_entries = Journaling.objects.filter(person=person).order_by('-date')[:3]
+
+        # Truncate the journal entry text to display only the first few sentences
+        # for entry in journal_entries:
+        #     print(f"entry is {entry}")
+        #     sentences = entry.entry_text.split(' ')
+        #     entry.truncated_text = '.'.join(sentences[:15]) + '.' if len(sentences) > 3 else entry.entry_text
+        # print(f"Sentences are {sentences}")
+
     except Person.DoesNotExist:
         person = None
         meditations = []
@@ -87,7 +98,7 @@ def dashboard(request):
         'journal_entries': journal_entries,
         #'greeting': f"Welcome back, {request.user.first_name}!"
         #'greeting': f"Welcome back, {request.user.get_full_name()}!"
-        'greeting': f"Welcome back, {request.user.get_username()}!"
+        'greeting': f"Welcome, {request.user.get_username()}!"
 
     }
     return render(request, 'blog/dashboard.html', context)
@@ -143,15 +154,37 @@ from django.db.models.functions import TruncDate
 
 @login_required
 def wellbeing_report(request):
-    meditations = Meditation.objects.filter(person=request.user.person).annotate(entry_date=TruncDate('created_date')).values('entry_date').annotate(count=Count('id')).order_by('entry_date')
-    journals = Journaling.objects.filter(person=request.user.person).annotate(entry_date=TruncDate('date')).values('entry_date').annotate(count=Count('id')).order_by('entry_date')
+    try:
+        person = request.user.person
+        meditations = Meditation.objects.filter(person=person).order_by('created_date')
+        journals = Journaling.objects.filter(person=person).order_by('date')
 
-    dates = sorted(set(meditations.values_list('entry_date', flat=True)) | set(journals.values_list('entry_date', flat=True)))
+        data = []
+        for meditation in meditations:
+            data.append({'date': meditation.created_date.date(), 'meditation_count': 1, 'journal_count': 0})
+        for journal in journals:
+            data.append({'date': journal.date, 'meditation_count': 0, 'journal_count': 1})
 
-    data = []
-    for date in dates:
-        meditation_count = next((m['count'] for m in meditations if m['entry_date'] == date), 0)
-        journal_count = next((j['count'] for j in journals if j['entry_date'] == date), 0)
-        data.append({'date': date, 'meditation_count': meditation_count, 'journal_count': journal_count})
+        return render(request, 'blog/wellbeing_report.html', {'data': data})
+    except Person.DoesNotExist:
+        return render(request, 'blog/wellbeing_report.html', {'data': []})
+##########################################################
+# add in add journaling view
+##########################################################
 
-    return render(request, 'blog/wellbeing_report.html', {'data': data})
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import MeditationForm, JournalingForm
+
+@login_required
+def add_journaling(request):
+    if request.method == 'POST':
+        form = JournalingForm(request.POST)
+        if form.is_valid():
+            journaling = form.save(commit=False)
+            journaling.person = request.user.person
+            journaling.save()
+            return redirect('dashboard')
+    else:
+        form = JournalingForm()
+    return render(request, 'blog/add_journaling.html', {'form': form})

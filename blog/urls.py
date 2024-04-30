@@ -16,5 +16,7 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(template_name='registration/logout.html'), name='logout'),    
     path('add_meditation/', views.add_meditation, name='add_meditation'),
     path('signup/', views.signup, name='signup'),
-    path('wellbeing-report/', views.wellbeing_report, name='wellbeing_report')
+    path('wellbeing-report/', views.wellbeing_report, name='wellbeing_report'),
+    path('add_journaling/', views.add_journaling, name='add_journaling')
+
 ]
