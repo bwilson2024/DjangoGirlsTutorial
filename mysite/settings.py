@@ -41,7 +41,7 @@ INSTALLED_APPS = [
 
 #AUTH_USER_MODEL = 'blog.User'  # Custom user model setting
 LOGIN_REDIRECT_URL = 'post_list'
-LOGIN_URL = 'login'
+#LOGIN_URL = 'post_list'
 LOGOUT_REDIRECT_URL = 'login'  # Replace with the name of your desired URL after logout
 
 MIDDLEWARE = [
