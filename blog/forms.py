@@ -1,5 +1,5 @@
 from django import forms
-from .models import Meditation, Journaling
+from .models import Meditation, Journaling, Post
 
 class MeditationForm(forms.ModelForm):
     class Meta:
@@ -11,5 +11,11 @@ class JournalingForm(forms.ModelForm):
         model = Journaling
 #        fields = ['entry_number', 'date']
         fields = ['entry_number', 'date', 'entry_text']  # Add 'entry_text' to the form fields
+
+class PostForm(forms.ModelForm):
+
+    class Meta:
+        model = Post
+        fields = ('title', 'text',)        
 
         
